@@ -1,4 +1,4 @@
-FROM alpine:3.17.0
+FROM alpine:3.19.1
 LABEL maintainer="Chris Kankiewicz <Chris@ChrisKankiewicz.com>"
 
 ARG SNAPCAST_VERSION=0.26.0-r3
