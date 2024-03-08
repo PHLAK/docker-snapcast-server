@@ -1,7 +1,7 @@
 FROM alpine:3.19.1
 LABEL maintainer="Chris Kankiewicz <Chris@ChrisKankiewicz.com>"
 
-ARG SNAPCAST_VERSION=0.26.0-r3
+ARG SNAPCAST_VERSION=0.27.0-r4
 
 RUN mkdir /etc/snapcast
 
