@@ -12,14 +12,11 @@ FROM debian:12.5
 
 COPY --from=build /tmp/snapserver_*.deb /root/
 
-RUN useradd snapcast \
-    && mkdir --parents --verbose /vol/data \
-    && chown snapcast:snapcast /vol/data
+RUN mkdir --parents --verbose /vol/data
 
 RUN apt-get update && apt-get install --assume-yes alsa-utils tzdata \
     && apt-get install --assume-yes /root/snapserver_*.deb
 
-USER snapcast
 VOLUME /vol/data
 EXPOSE 1704 1705 1780
 
