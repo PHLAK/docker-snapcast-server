@@ -1,16 +1,24 @@
-FROM debian:12.5
+FROM debian:12.5 as build
 LABEL maintainer="Chris Kankiewicz <Chris@ChrisKankiewicz.com>"
 
 ARG SNAPCAST_VERSION=0.28.0
 ARG ZIP_FILE=snapcast_${SNAPCAST_VERSION}_amd64-debian-bookworm.zip
 ARG ZIP_URL=https://github.com/badaix/snapcast/releases/download/v${SNAPCAST_VERSION}/${ZIP_FILE}
 
-RUN apt-get update && apt-get install --assume-yes alsa-utils ca-certificates tzdata unzip wget \
-    && wget --directory-prefix /root/ ${ZIP_URL} && unzip /root/${ZIP_FILE} -d /root/ \
-    && rm /root/${ZIP_FILE}
+RUN useradd --create-home snapcast
 
-RUN apt-get install --assume-yes /root/snapserver_${SNAPCAST_VERSION}-1_amd64.deb
+RUN apt-get update && apt-get install --assume-yes ca-certificates unzip wget \
+    && wget --directory-prefix /tmp/ ${ZIP_URL} && unzip /tmp/${ZIP_FILE} -d /tmp/
 
+FROM debian:12.5
+
+COPY --from=build /tmp/snapserver_*.deb /root/
+
+RUN apt-get update && apt-get install --assume-yes alsa-utils tzdata \
+    && apt-get install --assume-yes /root/snapserver_*.deb
+
+USER snapcast
+VOLUME /vol/data
 EXPOSE 1704 1705 1780
 
-CMD ["snapserver", "--config", "/etc/snapserver.conf", "--logfilter", "debug"]
+CMD ["snapserver", "--config=/etc/snapserver.conf", "--server.datadir=/vol/data", "--logfilter=debug"]
