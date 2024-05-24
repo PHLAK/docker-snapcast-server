@@ -1,8 +1,28 @@
+# --------- LIBRESPOT ----------
+
+FROM debian:12.5 as librespot
+
+ARG LIBRESPOT_VERSION=0.4.2
+ARG ZIP_PATH=/tmp/librespot.zip
+ARG ZIP_URL=https://github.com/librespot-org/librespot/archive/refs/tags/v${LIBRESPOT_VERSION}.zip
+
+RUN apt-get update && apt-get install --assume-yes build-essential curl libasound2-dev pkg-config unzip \
+    && curl --location --output ${ZIP_PATH} ${ZIP_URL} && unzip ${ZIP_PATH} -d /tmp/ \
+    && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+
+WORKDIR /tmp/librespot-${LIBRESPOT_VERSION}
+
+RUN ${HOME}/.cargo/bin/cargo build --release --no-default-features --features "alsa-backend"
+
+# --------- SNAPCAST ----------
+
 FROM debian:12.5
 LABEL maintainer="Chris Kankiewicz <Chris@ChrisKankiewicz.com>"
 
 ARG SNAPCAST_VERSION=0.28.0
 ARG SNAPSERVER_DEB_URL=https://github.com/badaix/snapcast/releases/download/v${SNAPCAST_VERSION}/snapserver_${SNAPCAST_VERSION}-1_amd64-bookworm.deb
+
+COPY --from=librespot /tmp/librespot-*/target/release/librespot /usr/local/bin/librespot
 
 RUN mkdir --parents --verbose /vol/data
 
