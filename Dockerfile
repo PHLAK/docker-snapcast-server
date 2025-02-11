@@ -32,7 +32,7 @@ RUN wget --directory-prefix /tmp/ ${SNAPSERVER_DEB_URL} \
     && apt-get install --assume-yes /tmp/snapserver_*.deb \
     && rm --verbose /tmp/snapserver_*.deb
 
-VOLUME /vol/data
+VOLUME /var/lib/snapserver
 EXPOSE 1704 1705 1780
 
-CMD ["snapserver", "--config=/etc/snapserver.conf", "--server.datadir=/vol/data", "--logfilter=debug"]
+CMD ["snapserver", "--config=/etc/snapserver.conf", "--logfilter=debug"]
