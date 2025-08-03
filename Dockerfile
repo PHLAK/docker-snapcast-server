@@ -19,7 +19,7 @@ RUN ${HOME}/.cargo/bin/cargo build --release --no-default-features --features "a
 FROM debian:12.11
 LABEL maintainer="Chris Kankiewicz <Chris@ChrisKankiewicz.com>"
 
-ARG SNAPCAST_VERSION=0.31.0
+ARG SNAPCAST_VERSION=0.32.0
 ARG SNAPSERVER_DEB_URL=https://github.com/badaix/snapcast/releases/download/v${SNAPCAST_VERSION}/snapserver_${SNAPCAST_VERSION}-1_amd64_bookworm.deb
 
 COPY --from=librespot /tmp/librespot-*/target/release/librespot /usr/local/bin/librespot
