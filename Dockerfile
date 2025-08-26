@@ -2,17 +2,17 @@
 
 FROM debian:12.11 AS librespot
 
-ARG LIBRESPOT_VERSION=0.6.0
+ARG LIBRESPOT_VERSION=0.7.0
 ARG ZIP_PATH=/tmp/librespot.zip
 ARG ZIP_URL=https://github.com/librespot-org/librespot/archive/refs/tags/v${LIBRESPOT_VERSION}.zip
 
-RUN apt-get update && apt-get install --assume-yes build-essential curl libasound2-dev pkg-config unzip \
+RUN apt-get update && apt-get install --assume-yes build-essential curl libasound2-dev libssl-dev pkg-config unzip \
     && curl --location --output ${ZIP_PATH} ${ZIP_URL} && unzip ${ZIP_PATH} -d /tmp/ \
     && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
 WORKDIR /tmp/librespot-${LIBRESPOT_VERSION}
 
-RUN ${HOME}/.cargo/bin/cargo build --release --no-default-features --features "alsa-backend"
+RUN ${HOME}/.cargo/bin/cargo build --release --no-default-features --features "native-tls alsa-backend with-libmdns"
 
 # --------- SNAPCAST ----------
 
