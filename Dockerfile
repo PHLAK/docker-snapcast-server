@@ -1,6 +1,6 @@
 # --------- LIBRESPOT ----------
 
-FROM debian:12.11 AS librespot
+FROM debian:13.1 AS librespot
 
 ARG LIBRESPOT_VERSION=0.7.1
 ARG ZIP_PATH=/tmp/librespot.zip
@@ -16,11 +16,11 @@ RUN ${HOME}/.cargo/bin/cargo build --release --no-default-features --features "n
 
 # --------- SNAPCAST ----------
 
-FROM debian:12.11
+FROM debian:13.1
 LABEL maintainer="Chris Kankiewicz <Chris@ChrisKankiewicz.com>"
 
 ARG SNAPCAST_VERSION=0.33.0
-ARG SNAPSERVER_DEB_URL=https://github.com/badaix/snapcast/releases/download/v${SNAPCAST_VERSION}/snapserver_${SNAPCAST_VERSION}-1_amd64_bookworm.deb
+ARG SNAPSERVER_DEB_URL=https://github.com/badaix/snapcast/releases/download/v${SNAPCAST_VERSION}/snapserver_${SNAPCAST_VERSION}-1_amd64_trixie.deb
 
 COPY --from=librespot /tmp/librespot-*/target/release/librespot /usr/local/bin/librespot
 
