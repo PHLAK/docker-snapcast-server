@@ -2,7 +2,7 @@
 
 FROM debian:13.3 AS librespot
 
-ARG LIBRESPOT_VERSION=0.7.1
+ARG LIBRESPOT_VERSION=0.8.0
 ARG ZIP_PATH=/tmp/librespot.zip
 ARG ZIP_URL=https://github.com/librespot-org/librespot/archive/refs/tags/v${LIBRESPOT_VERSION}.zip
 
