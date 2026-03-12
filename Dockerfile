@@ -17,9 +17,9 @@ RUN ${HOME}/.cargo/bin/cargo build --release --no-default-features --features "n
 # --------- SNAPCAST ----------
 
 FROM debian:13.3
-LABEL maintainer="Chris Kankiewicz <Chris@ChrisKankiewicz.com>"
+LABEL maintainer="Chris Kankiewicz <Chris@Kankiewicz.com>"
 
-ARG SNAPCAST_VERSION=0.34.0
+ARG SNAPCAST_VERSION=0.35.0
 ARG SNAPSERVER_DEB_URL=https://github.com/badaix/snapcast/releases/download/v${SNAPCAST_VERSION}/snapserver_${SNAPCAST_VERSION}-1_amd64_trixie.deb
 
 COPY --from=librespot /tmp/librespot-*/target/release/librespot /usr/local/bin/librespot
