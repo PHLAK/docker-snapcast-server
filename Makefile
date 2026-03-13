@@ -1,8 +1,9 @@
 IMAGE_NAME="phlak/snapcast-server"
-IMAGE_TAG="$$(grep 'ARG SNAPCAST_VERSION' Dockerfile | awk -F = '{print $$2}')"
+SNAPCAST_VERSION="$$(grep 'ARG SNAPCAST_VERSION' Dockerfile | awk -F = '{print $$2}')"
+LIBRESPOT_VERSION="$$(grep 'ARG LIBRESPOT_VERSION' Dockerfile | awk -F = '{print $$2}')"
 
 build:
-	@docker build --force-rm --pull --tag $(IMAGE_NAME):$(IMAGE_TAG) .
+	@docker build --force-rm --pull --tag $(IMAGE_NAME):$(SNAPCAST_VERSION)-$(LIBRESPOT_VERSION) .
 
 purge:
-	@docker image rm --force $(IMAGE_NAME):$(IMAGE_TAG)
+	@docker image rm --force $(IMAGE_NAME):$(SNAPCAST_VERSION)-$(LIBRESPOT_VERSION)
