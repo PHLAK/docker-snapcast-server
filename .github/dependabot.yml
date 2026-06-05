@@ -2,17 +2,15 @@ version: 2
 
 updates:
   - package-ecosystem: docker
-    directory: "/"
-    labels:
-      - "Dependencies"
+    directory: /
+    labels: [Dependencies]
     schedule:
       interval: monthly
       timezone: US/Arizona
 
   - package-ecosystem: github-actions
-    directory: "/"
-    labels:
-      - "Dependencies"
+    directory: /
+    labels: [Dependencies]
     schedule:
       interval: monthly
       timezone: US/Arizona
