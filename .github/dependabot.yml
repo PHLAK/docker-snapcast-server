@@ -3,14 +3,27 @@ version: 2
 updates:
   - package-ecosystem: docker
     directory: /
-    labels: [Dependencies]
+    groups:
+      docker-actions-minor-and-patch:
+        patterns: ['*']
+        update-types: [minor, patch]
+    labels: [Dependencies, Docker]
     schedule:
       interval: monthly
       timezone: US/Arizona
+    cooldown:
+      default-days: 2
+    assignees: [PHLAK]
 
   - package-ecosystem: github-actions
     directory: /
-    labels: [Dependencies]
+    groups:
+      github-actions-minor-and-patch:
+        patterns: ['*']
+        update-types: [major, minor, patch]
+    labels: [Dependencies, GitHub Actions]
     schedule:
       interval: monthly
-      timezone: US/Arizona
+    cooldown:
+      default-days: 2
+    assignees: [PHLAK]
