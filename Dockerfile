@@ -1,6 +1,6 @@
 # --------- LIBRESPOT ----------
 
-FROM debian:13.5 AS librespot
+FROM debian:13.6 AS librespot
 
 ARG LIBRESPOT_VERSION=0.8.0
 ARG ZIP_PATH=/tmp/librespot.zip
@@ -16,7 +16,7 @@ RUN ${HOME}/.cargo/bin/cargo build --release --no-default-features --features "n
 
 # --------- SNAPCAST ----------
 
-FROM debian:13.5
+FROM debian:13.6
 LABEL maintainer="Chris Kankiewicz <Chris@Kankiewicz.com>"
 
 ARG SNAPCAST_VERSION=0.35.0
